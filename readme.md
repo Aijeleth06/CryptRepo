@@ -8,7 +8,7 @@
 
 One of my major web projects, such as:
 
-- [Simple, Responsive].
-- [Friendly Interface].
+- Simple, Responsive.
+- Friendly Interface.
 - Multiple back-ends.
 - Expressive, intuitive database.
