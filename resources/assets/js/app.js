@@ -16,7 +16,14 @@ window.Vue = require('vue');
  */
 
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
+Vue.component('coin-progress', require('./components/CoinProgress.vue'));
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    mounted() {
+      Echo.channel('c-t')
+      .listen('CPC', (e) => {
+        console.log('all good. . .')
+      });
+    }
 });

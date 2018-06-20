@@ -18,10 +18,11 @@ class CreateAdminsTable extends Migration
             $table->string('first_name');
             $table->string('middle_name');
             $table->string('last_name');
-            $table->string('suffix_name');
+            $table->string('suffix_name')->nullable();
             $table->string('email')->unique();
             $table->string('position_title');
             $table->string('password');
+            /*$table->string('api_token', 60)->unique();*/
             $table->rememberToken();
             $table->timestamps();
         });
