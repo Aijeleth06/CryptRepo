@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row">
             <div class="panel panel-default">
-                <div class="panel-heading">USER Dashboard</div>
+                <div class="panel-heading">Account Balance</div>
 
                 <div class="panel-body">
                     @if (session('status'))
@@ -13,9 +13,8 @@
                         </div>
                     @endif
 
-                    @component('components.who')
-
-                    @endcomponent
+                    <p class="text-success">EzerCoin {{$mywallet->user_coins}}</p>
+                    <p class="text-success">EzerCoin Wallet Address {{$mywallet->wallet_address}}</p>
                 </div>
             </div>
     </div>
@@ -34,6 +33,7 @@
                     @component('components.who')
 
                     @endcomponent
+                     <p class="text-success">Your account is: {{ auth()->user()->verified() ? 'Verified' : 'Not Verified' }}</p> 
                 </div>
             </div>
         </div>

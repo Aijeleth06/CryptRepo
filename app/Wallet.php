@@ -8,7 +8,7 @@ class Wallet extends Model
 {
     protected $fillable = ['user_id', 'coin_id', 'wallet_address', 'user_coins'];
 
-    public function client()
+    public function user()
     {
         return $this->belongsTo('App\User', 'user_id');
     }

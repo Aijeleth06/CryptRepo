@@ -37,4 +37,8 @@ class User extends Authenticatable
     {
         $this->notify(new VerifyEmail($this));
     }
+
+    public function wallet(){
+    	return $this->hasOne('App\Wallet', 'user_id', 'id');
+    }
 }

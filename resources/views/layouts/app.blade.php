@@ -34,7 +34,7 @@
                     <a class="navbar-brand">
                         <label class="label label-default">
                         
-                         Buy $ 0.019 | Sell $ 0.014
+                         Buy $ {{$ezer[0]->price}} | Sell $ 0.014
                         </label>
                     </a>
                 </div>
@@ -57,8 +57,23 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
                                     {{ Auth::user()->first_name }} {{ Auth::user()->last_name }} <span class="caret"></span>
                                 </a>
-
-                                <ul class="dropdown-menu">
+@if(Auth::guard('admin')->check())
+							<ul class="dropdown-menu">
+                                    <li>
+                                        <a href="{{ route('admin.dashboard') }}">
+                                            Home
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('admin.view.coins') }}">
+                                            Cryptos
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('admin.view.lists') }}">
+                                            Account Lists
+                                        </a>
+                                    </li>
                                     <li>
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
@@ -71,6 +86,37 @@
                                         </form>
                                     </li>
                                 </ul>
+@elseif(Auth::guard('web')->check())
+							<ul class="dropdown-menu">
+                                    <li>
+                                        <a href="{{ route('home') }}">
+                                            Home
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('transfer') }}">
+                                            Transfer Funds
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('account') }}">
+                                            Account
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('logout') }}"
+                                            onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                            Logout
+                                        </a>
+
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                            {{ csrf_field() }}
+                                        </form>
+                                    </li>
+                                </ul>
+@endif
+                                
                             </li>
                         @endguest
                     </ul>

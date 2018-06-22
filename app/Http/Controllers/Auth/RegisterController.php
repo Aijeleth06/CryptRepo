@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\Wallet;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -69,9 +70,20 @@ class RegisterController extends Controller
             'middle_name' => $data['middle_name'],
             'last_name' => $data['last_name'],
             'email' => $data['email'],
+            'suffix_name' => $data['name_suffix'],
             'password' => bcrypt($data['password']),
             'token' => str_random(25),
         ]);
+        
+        $user->save();
+
+        $wallet = Wallet::create([
+            'user_id' => $user->id,
+            'coin_id' => 1,
+            'wallet_address' => str_random(34),
+            'user_coins' => 0,
+        ]);
+        $wallet->save();
 
         $user->sendVerificationEmail();
 

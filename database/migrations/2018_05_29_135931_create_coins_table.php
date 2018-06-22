@@ -17,9 +17,9 @@ class CreateCoinsTable extends Migration
             $table->increments('id');
             $table->string('name')->unique();
             $table->decimal('price', 19, 4)->unsigned();
-            $table->integer('volume')->unsigned();
-            $table->integer('circulatingsupply')->unsigned();
-            $table->integer('maxsupply')->unsigned();
+            $table->bigInteger('volume')->unsigned();
+            $table->bigInteger('circulatingsupply')->unsigned();
+            $table->bigInteger('maxsupply')->unsigned();
             $table->timestamps();
         });
     }

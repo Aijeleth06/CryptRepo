@@ -6,6 +6,7 @@ use App\Wallet;
 use App\Coin;
 use Illuminate\Http\Request;
 use App\Events\CPC;
+use App\User;
 
 class AdminController extends Controller
 {
@@ -26,54 +27,32 @@ class AdminController extends Controller
      */
     public function index()
     {
-
-        $wallets = Wallet::with(['client', 'price'])->get();
-        return view('admin', compact('wallets'));
+        return view('admin');
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Wallet $wallet)
+    public function showLists()
     {
-        return view('show', compact('wallet'));
+    	$wallets = Wallet::with('user')->paginate(1);
+    	return view('view', compact('wallets'));
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Order  $order
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Wallet $wallet)
+    public function showCoinTypes()
     {
-        $statuses = Coin::all();
-        $currentStatus = $wallet->coin_id;
-
-        return view('admin.edit', compact('wallet', 'statuses', 'currentStatus'));
+    	$coins = Coin::orderBy('id', 'asc')->paginate(1);
+    	return view('cryptos')->with('coins', $coins);
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Order  $order
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Wallet $wallet)
+    public function coinModify(Coin $coin)
     {
-        $request->validate([
-            'coin_id' => 'required|numeric',
+    	$thisCoin = Coin::where('id', $coin->id)->first();
+    	return view('modify', compact('coin', 'thisCoin'));
+    }
+    public function coinUpdate(Request $request, Coin $coin)
+    {
+    	$request->validate([
+            'new_price' => 'required|regex:/^\d*(\.\d{1,4})?$/',
         ]);
 
-        $wallet->coin_id = $request->coin_id;
-        $wallet->save();
+        $coin->price = $request->new_price;
+        $coin->save();
 
-        event(new CPC($wallet));
-
-        return back()->with('message', 'Coin was updated successfully!');
+        return back()->with('message', 'Coin updated successfully!');
     }
 }
